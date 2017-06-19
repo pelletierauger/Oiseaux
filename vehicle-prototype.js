@@ -4,8 +4,13 @@ var Vehicle = function(x, y, m) {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
+
+    //settings for scene01 with the window
     this.maxSpeed = 150;
     this.maxForce = 10;
+
+    // this.maxSpeed = 300;
+    // this.maxForce = 20;
     vehicles.push(this);
 };
 
@@ -24,7 +29,7 @@ Vehicle.prototype.seek = function(target) {
 };
 
 Vehicle.prototype.separate = function(vehicles) {
-    var desiredSeparation = 50;
+    var desiredSeparation = 20;
     var sum = createVector(0, 0);
     var count = 0;
     for (var i = 0; i < vehicles.length; i++) {
@@ -55,6 +60,10 @@ Vehicle.prototype.applyBehaviors = function(vehicles, target, applySeparate) {
     var seekForce = this.seek(target);
 
     separateForce.mult(applySeparate);
+
+    // pour scene01 :
+    // seekForce.mult(0.4);
+
     seekForce.mult(0.4);
 
     this.applyForce(separateForce);
@@ -83,7 +92,7 @@ Vehicle.prototype.update = function(force) {
 // };
 
 Vehicle.prototype.display = function(i) {
-
+    var s = 10;
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);
     push();
@@ -91,7 +100,7 @@ Vehicle.prototype.display = function(i) {
     var maps = map(i, 0, points.length, 2, 5);
     rotate(sin(frameCount / maps) * TWO_PI);
     var randomDot = Math.floor(random(0, dots.length - 1));
-    image(dots[Math.floor(abs(sin(i)) * 3)], 0, 0, 8, 8);
+    image(dots[Math.floor(abs(sin(i)) * 3)], 0, 0, s, s);
     pop();
     // rect(this.os.x, this.pos.y, 1, 1);
 };

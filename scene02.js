@@ -21,16 +21,20 @@ var dotId = 0;
 
 var w;
 
+var suburb;
+
 function preload() {
     for (var i = 0; i < 4; i++) {
         var img = loadImage("dot001-" + i + ".png");
         dots.push(img);
     }
-    previousPoints = loadJSON("points.json");
+    previousPoints = loadJSON("points3.json");
+    suburb = loadImage("banlieue.png");
 }
 
+
 function setup() {
-    createCanvas(windowWidth, windowWidth);
+    createCanvas(windowWidth, windowWidth * 9 / 16);
     background(0);
     fill(255, 150);
     noStroke();
@@ -45,8 +49,8 @@ function setup() {
     for (var i = 0; i < TWO_PI; i += increment) {
         // var x = noise(i) * 300;
         // var y = noise(i * 2) * 300;
-        var x = 0 + cos(i) * 150;
-        var y = 0 + sin(i) * 150;
+        var x = width + 150 + cos(i) * 150;
+        var y = height + sin(i) * 150;
         var vehicles = new Vehicle(x, y);
         // var vehicles = new Vehicle(x + width / 2, y + height / 2);
     }
@@ -59,6 +63,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
+    // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
     // var y = sin(t / 10) * 300;
 
@@ -67,33 +72,40 @@ function draw() {
 
     // target = createVector(x + width / 2, y + height / 2);
 
-    // for (var i = 0; i < points.length; i++) {
-    //     push();
 
-    //     fill(255, 50);
-    //     translate(points[i].x, points[i].y);
-    //     ellipse(0, 0, 5);
-    //     pop();
-    // }
     var applySeparate = map(sin(frameCount / 10), -1, 1, 0, 1) * 2;
     // applySeparate = map(sin(frameCount / 20), -1, 1, 0, 1) * 2;
     // applySeparate = map(sin(frameCount / 2), -1, 1, -1, 1) * 0.5;
     applySeparate = 1;
     if (points.length > 0) {
+
+
+        // for (var i = 0; i < points.length; i++) {
+        //     push();
+        //     fill(0, 50);
+        //     translate(points[i].x, points[i].y);
+        //     ellipse(0, 0, 5);
+        //     pop();
+        // }
+
+
         // fill(255, 0, 0);
         // ellipse(points[currentPoint].x, points[currentPoint].y, 5);
+
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
         // w.display();
+
         // fill(255, 0, 0);
         // ellipse(target.x, target.y, 5);
         currentPoint++;
         if (currentPoint >= points.length) {
             currentPoint = 0;
-            for (var k = 0; k < vehicles.length; k++) {
-                vehicles[k].pos = createVector(points[0].x, points[0].y);
-            }
+            // for (var k = 0; k < vehicles.length; k++) {
+            //     vehicles[k].pos = createVector(points[0].x, points[0].y);
+            // }
+
         }
-        var shiftedPos = createVector(w.pos.x, w.pos.y + 400);
+        var shiftedPos = createVector(w.pos.x - 300, (w.pos.y - 200) * 2);
         for (var i = 0; i < vehicles.length; i++) {
             // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
@@ -108,7 +120,7 @@ function draw() {
         }
     }
 
-    if (exporting && frameCount % 2 == 0) {
+    if (exporting && frameCount % 3 == 0) {
         frameExport();
     }
 

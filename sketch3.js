@@ -30,7 +30,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(windowWidth, windowWidth);
+    createCanvas(windowWidth, windowHeight);
     background(0);
     fill(255, 150);
     noStroke();
@@ -40,15 +40,15 @@ function setup() {
 
     // points.push(createVector(0, 0));
 
-    var vehicleCount = 300;
+    var vehicleCount = 400;
     var increment = TWO_PI / vehicleCount;
     for (var i = 0; i < TWO_PI; i += increment) {
         // var x = noise(i) * 300;
         // var y = noise(i * 2) * 300;
-        var x = 0 + cos(i) * 150;
-        var y = 0 + sin(i) * 150;
-        var vehicles = new Vehicle(x, y);
-        // var vehicles = new Vehicle(x + width / 2, y + height / 2);
+        var x = cos(i) * 150;
+        var y = sin(i) * 150;
+        // var vehicles = new Vehicle(x, y);
+        var vehicles = new Vehicle(x + width / 2, y + height / 2);
     }
 }
 
@@ -59,13 +59,14 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    // var x = cos(t / 10) * 300;
-    // var y = sin(t / 10) * 300;
+    var s = frameCount;
+    var x = cos(t * 0.1) * s;
+    var y = sin(t * 0.1) * cos(t * 0.1) * s;
 
     // x = map(noise(t / 50), 0, 1, -width / 2, width / 2);
     // y = map(noise(1000 + t / 100), 0, 1, -height / 2, height / 2);
 
-    // target = createVector(x + width / 2, y + height / 2);
+    target = createVector(x + width / 2, y + height / 2);
 
     // for (var i = 0; i < points.length; i++) {
     //     push();
@@ -75,17 +76,17 @@ function draw() {
     //     ellipse(0, 0, 5);
     //     pop();
     // }
-    var applySeparate = map(sin(frameCount / 10), -1, 1, 0, 1) * 2;
-    // applySeparate = map(sin(frameCount / 20), -1, 1, 0, 1) * 2;
-    // applySeparate = map(sin(frameCount / 2), -1, 1, -1, 1) * 0.5;
+    // var applySeparate = map(sin(frameCount / 10), -1, 1, 0, 1) * 2;
+    var applySeparate = map(sin(frameCount / 20), -1, 1, 0, 1) * 2;
+    applySeparate = map(sin(frameCount / 2), -1, 1, 0, 1);
     applySeparate = 1;
     if (points.length > 0) {
         // fill(255, 0, 0);
         // ellipse(points[currentPoint].x, points[currentPoint].y, 5);
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
         // w.display();
-        // fill(255, 0, 0);
-        // ellipse(target.x, target.y, 5);
+        fill(255, 0, 0);
+        ellipse(target.x, target.y, 5);
         currentPoint++;
         if (currentPoint >= points.length) {
             currentPoint = 0;
@@ -93,12 +94,11 @@ function draw() {
                 vehicles[k].pos = createVector(points[0].x, points[0].y);
             }
         }
-        var shiftedPos = createVector(w.pos.x, w.pos.y + 400);
         for (var i = 0; i < vehicles.length; i++) {
-            // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
+            vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
             // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
-            vehicles[i].applyBehaviors(vehicles, shiftedPos, applySeparate);
+            // vehicles[i].applyBehaviors(vehicles, w.pos, applySeparate);
             // vehicles[i].seek(target);
             // vehicles[i].separate(vehicles);
 
@@ -108,7 +108,7 @@ function draw() {
         }
     }
 
-    if (exporting && frameCount % 2 == 0) {
+    if (exporting) {
         frameExport();
     }
 
@@ -174,7 +174,7 @@ function Walker(x, y) {
         // if (norma) {
         //     this.acc.normalize();
         // }
-        this.acc.mult(0.005);
+        this.acc.mult(0.0025);
         this.vel.add(this.acc);
         this.pos.add(this.vel);
         this.vel.mult(0.9);
