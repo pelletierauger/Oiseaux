@@ -1,10 +1,6 @@
-var vehicles = [];
-var maxSpeed = 150;
-var maxForce = 10;
-var dSeparation = 50;
-var seekForceMult = 0.8;
+var vehicles2 = [];
 
-var Vehicle = function(x, y, m) {
+var Vehicle2 = function(x, y, m) {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
@@ -15,14 +11,14 @@ var Vehicle = function(x, y, m) {
 
     // this.maxSpeed = 300;
     // this.maxForce = 20;
-    vehicles.push(this);
+    vehicles2.push(this);
 };
 
-Vehicle.prototype.applyForce = function(force) {
+Vehicle2.prototype.applyForce = function(force) {
     this.acc.add(force);
 };
 
-Vehicle.prototype.seek = function(target) {
+Vehicle2.prototype.seek = function(target) {
     var desired = p5.Vector.sub(target, this.pos);
     desired.setMag(this.maxSpeed);
 
@@ -32,7 +28,7 @@ Vehicle.prototype.seek = function(target) {
     return (steering);
 };
 
-Vehicle.prototype.separate = function(vehicles) {
+Vehicle2.prototype.separate = function(vehicles) {
     var desiredSeparation = dSeparation;
     var sum = createVector(0, 0);
     var count = 0;
@@ -59,7 +55,7 @@ Vehicle.prototype.separate = function(vehicles) {
     return (createVector(0, 0));
 };
 
-Vehicle.prototype.applyBehaviors = function(vehicles, target, applySeparate) {
+Vehicle2.prototype.applyBehaviors = function(vehicles, target, applySeparate) {
     var separateForce = this.separate(vehicles);
     var seekForce = this.seek(target);
 
@@ -74,7 +70,7 @@ Vehicle.prototype.applyBehaviors = function(vehicles, target, applySeparate) {
     this.applyForce(seekForce);
 };
 
-Vehicle.prototype.update = function(force) {
+Vehicle2.prototype.update = function(force) {
     this.vel.add(this.acc);
     this.vel.limit(this.maxSpeed);
     this.pos.add(this.vel);
@@ -95,7 +91,7 @@ Vehicle.prototype.update = function(force) {
 //     // rect(this.pos.x, this.pos.y, 1, 1);
 // };
 
-Vehicle.prototype.display = function(i) {
+Vehicle2.prototype.display = function(i) {
     var s = 10;
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);

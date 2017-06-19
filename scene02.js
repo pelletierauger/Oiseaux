@@ -7,6 +7,7 @@ var amounts = 1;
 var s = 15;
 
 var previousPoints;
+var previousPoints2;
 
 var exporting = false;
 var fileName = "oiseaux";
@@ -20,8 +21,10 @@ var dots = [];
 var dotId = 0;
 
 var w;
+var w2;
 
 var suburb;
+var suburb2;
 
 function preload() {
     for (var i = 0; i < 4; i++) {
@@ -29,7 +32,9 @@ function preload() {
         dots.push(img);
     }
     previousPoints = loadJSON("points3.json");
+    previousPoints2 = loadJSON("points2.json");
     suburb = loadImage("banlieue.png");
+    suburb2 = loadImage("banlieue-overlay.png");
 }
 
 
@@ -44,7 +49,7 @@ function setup() {
 
     // points.push(createVector(0, 0));
 
-    var vehicleCount = 300;
+    var vehicleCount = 2000;
     var increment = TWO_PI / vehicleCount;
     for (var i = 0; i < TWO_PI; i += increment) {
         // var x = noise(i) * 300;
@@ -52,6 +57,12 @@ function setup() {
         var x = width + 150 + cos(i) * 150;
         var y = height + sin(i) * 150;
         var vehicles = new Vehicle(x, y);
+        // var vehicles = new Vehicle(x + width / 2, y + height / 2);
+    }
+    for (var j = 0; j < TWO_PI; j += increment) {
+        var x = 150 + cos(j) * 150;
+        var y = sin(j) * 150;
+        var vehicles2 = new Vehicle2(x, y);
         // var vehicles = new Vehicle(x + width / 2, y + height / 2);
     }
 }
@@ -63,7 +74,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    // image(suburb, width / 2, height / 2, width, width * 9 / 16);
+    image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
     // var y = sin(t / 10) * 300;
 
@@ -93,34 +104,42 @@ function draw() {
         // ellipse(points[currentPoint].x, points[currentPoint].y, 5);
 
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
+
+        w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
         // w.display();
 
         // fill(255, 0, 0);
         // ellipse(target.x, target.y, 5);
         currentPoint++;
-        if (currentPoint >= points.length) {
+        if (currentPoint >= points2.length) {
             currentPoint = 0;
             // for (var k = 0; k < vehicles.length; k++) {
             //     vehicles[k].pos = createVector(points[0].x, points[0].y);
             // }
 
         }
-        var shiftedPos = createVector(w.pos.x - 300, (w.pos.y - 200) * 2);
+        var shiftedPos = createVector((w.pos.x - 300) * 1.2, (w.pos.y - 200) * 2);
+        var shiftedPos2 = createVector(w2.pos.x * 1.2, w2.pos.y);
         for (var i = 0; i < vehicles.length; i++) {
             // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
             // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
             vehicles[i].applyBehaviors(vehicles, shiftedPos, applySeparate);
-            // vehicles[i].seek(target);
-            // vehicles[i].separate(vehicles);
-
-
             vehicles[i].update();
             vehicles[i].display(i);
         }
-    }
+        for (var j = 0; j < vehicles2.length; j++) {
+            // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
-    if (exporting && frameCount % 3 == 0) {
+            // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
+            vehicles2[j].applyBehaviors(vehicles2, shiftedPos2, applySeparate);
+            vehicles2[j].update();
+            vehicles2[j].display(j);
+        }
+    }
+    blendMode(NORMAL);
+    image(suburb2, width / 2, height / 2, width, width * 9 / 16);
+    if (exporting && frameCount % 2 == 0) {
         frameExport();
     }
 
@@ -164,11 +183,17 @@ function keyPressed() {
     if (key == 'a' || key == 'A') {
         points = [];
         for (var k = 0; k < previousPoints.length; k++) {
-            console.log("yeah!");
+            // console.log("yeah!");
             points.push(createVector(previousPoints[k][0], previousPoints[k][1]));
         }
+        points2 = [];
+        for (var l = 0; l < previousPoints2.length; l++) {
+            // console.log("yeah!");
+            points2.push(createVector(previousPoints2[l][0], previousPoints2[l][1]));
+        }
         w = new Walker(points[0].x, points[0].y);
-        // exporting = true;
+        w2 = new Walker(points2[0].x, points2[0].y);
+        exporting = true;
     }
 }
 
