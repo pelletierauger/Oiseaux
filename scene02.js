@@ -31,8 +31,8 @@ function preload() {
         var img = loadImage("dot001-" + i + ".png");
         dots.push(img);
     }
-    previousPoints = loadJSON("points3.json");
-    previousPoints2 = loadJSON("points2.json");
+    previousPoints = loadJSON("points4.json");
+    previousPoints2 = loadJSON("points5.json");
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
 }
@@ -49,7 +49,7 @@ function setup() {
 
     // points.push(createVector(0, 0));
 
-    var vehicleCount = 2000;
+    var vehicleCount = 3000;
     var increment = TWO_PI / vehicleCount;
     for (var i = 0; i < TWO_PI; i += increment) {
         // var x = noise(i) * 300;
@@ -74,7 +74,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(suburb, width / 2, height / 2, width, width * 9 / 16);
+    // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
     // var y = sin(t / 10) * 300;
 
@@ -98,6 +98,13 @@ function draw() {
         //     ellipse(0, 0, 5);
         //     pop();
         // }
+        // for (var i = 0; i < points2.length; i++) {
+        //     push();
+        //     fill(0, 50);
+        //     translate(points2[i].x, points[i].y);
+        //     ellipse(0, 0, 5);
+        //     pop();
+        // }
 
 
         // fill(255, 0, 0);
@@ -106,20 +113,22 @@ function draw() {
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
 
         w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
+
         // w.display();
 
         // fill(255, 0, 0);
         // ellipse(target.x, target.y, 5);
         currentPoint++;
-        if (currentPoint >= points2.length) {
+        if (currentPoint >= points.length) {
             currentPoint = 0;
             // for (var k = 0; k < vehicles.length; k++) {
             //     vehicles[k].pos = createVector(points[0].x, points[0].y);
             // }
 
         }
-        var shiftedPos = createVector((w.pos.x - 300) * 1.2, (w.pos.y - 200) * 2);
-        var shiftedPos2 = createVector(w2.pos.x * 1.2, w2.pos.y);
+        // var shiftedPos = createVector((w.pos.x - 300) * 1.2, (w.pos.y - 200) * 2);
+        var shiftedPos = createVector(w.pos.x, w.pos.y);
+        var shiftedPos2 = createVector(w2.pos.x, w2.pos.y);
         for (var i = 0; i < vehicles.length; i++) {
             // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
@@ -137,8 +146,8 @@ function draw() {
             vehicles2[j].display(j);
         }
     }
-    blendMode(NORMAL);
-    image(suburb2, width / 2, height / 2, width, width * 9 / 16);
+    // blendMode(NORMAL);
+    // image(suburb2, width / 2, height / 2, width, width * 9 / 16);
     if (exporting && frameCount % 2 == 0) {
         frameExport();
     }
