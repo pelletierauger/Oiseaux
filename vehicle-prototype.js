@@ -2,7 +2,7 @@ var vehicles = [];
 var maxSpeed = 150;
 var maxForce = 10;
 var dSeparation = 50;
-var seekForceMult = 0.8;
+var seekForceMult = 0.6;
 
 var Vehicle = function(x, y, m) {
     this.pos = createVector(x, y);
