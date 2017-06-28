@@ -202,7 +202,7 @@ function keyPressed() {
         }
         w = new Walker(points[0].x, points[0].y);
         w2 = new Walker(points2[0].x, points2[0].y);
-        exporting = true;
+        // exporting = true;
     }
 }
 
