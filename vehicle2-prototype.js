@@ -70,6 +70,21 @@ Vehicle2.prototype.applyBehaviors = function(vehicles, target, applySeparate) {
     this.applyForce(seekForce);
 };
 
+Vehicle2.prototype.applyBehaviorsBetter = function(vehicles, target, applySeparate) {
+    applySeparate = applySeparate || 1;
+    var separateForce = this.separate(vehicles);
+    separateForce.mult(applySeparate);
+    this.applyForce(separateForce);
+
+    if (target) {
+        var seekForce = this.seek(target);
+        // pour scene01 :
+        // seekForce.mult(0.4);
+        seekForce.mult(seekForceMult);
+        this.applyForce(seekForce);
+    }
+};
+
 Vehicle2.prototype.update = function(force) {
     this.vel.add(this.acc);
     this.vel.limit(this.maxSpeed);

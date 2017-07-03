@@ -2,7 +2,7 @@ var vehicles = [];
 var maxSpeed = 150;
 var maxForce = 10;
 var dSeparation = 50;
-var seekForceMult = 0.6;
+var seekForceMult = 0.4;
 
 var Vehicle = function(x, y, m) {
     this.pos = createVector(x, y);
@@ -72,6 +72,21 @@ Vehicle.prototype.applyBehaviors = function(vehicles, target, applySeparate) {
 
     this.applyForce(separateForce);
     this.applyForce(seekForce);
+};
+
+Vehicle.prototype.applyBehaviorsBetter = function(vehicles, target, applySeparate) {
+    applySeparate = applySeparate || 1;
+    var separateForce = this.separate(vehicles);
+    separateForce.mult(applySeparate);
+    this.applyForce(separateForce);
+
+    if (target) {
+        var seekForce = this.seek(target);
+        // pour scene01 :
+        // seekForce.mult(0.4);
+        seekForce.mult(seekForceMult);
+        this.applyForce(seekForce);
+    }
 };
 
 Vehicle.prototype.update = function(force) {

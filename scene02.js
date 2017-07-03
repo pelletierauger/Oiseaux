@@ -56,13 +56,15 @@ function setup() {
         // var y = noise(i * 2) * 300;
         var x = width + 150 + cos(i) * 150;
         var y = height + sin(i) * 150;
-        var vehicles = new Vehicle(x, y);
+        var vehicles = new Vehicle(width / 2, height / 2);
+        // var vehicles = new Vehicle(x, y);
         // var vehicles = new Vehicle(x + width / 2, y + height / 2);
     }
     for (var j = 0; j < TWO_PI; j += increment) {
         var x = 150 + cos(j) * 150;
         var y = sin(j) * 150;
-        var vehicles2 = new Vehicle2(x, y);
+        // var vehicles2 = new Vehicle2(x, y);
+        var vehicles2 = new Vehicle2(width / 2, height / 2);
         // var vehicles = new Vehicle(x + width / 2, y + height / 2);
     }
 }
@@ -74,14 +76,21 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
+    var divider = 10;
+
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
-    // var x = cos(t / 10) * 300;
-    // var y = sin(t / 10) * 300;
+    var x = cos(t / divider) * 100;
+    var y = sin(t / divider) * 100;
+
+    var x2 = cos(t / divider) * 300;
+    var y2 = sin(t / divider) * 300;
 
     // x = map(noise(t / 50), 0, 1, -width / 2, width / 2);
     // y = map(noise(1000 + t / 100), 0, 1, -height / 2, height / 2);
 
-    // target = createVector(x + width / 2, y + height / 2);
+    var target = createVector(x + width / 2, y + height / 2);
+    var target2 = createVector(x2 + width / 2, y2 + height / 2);
+
 
 
     var applySeparate = map(sin(frameCount / 10), -1, 1, 0, 1) * 2;
@@ -107,12 +116,26 @@ function draw() {
         // }
 
 
+
         // fill(255, 0, 0);
         // ellipse(points[currentPoint].x, points[currentPoint].y, 5);
 
-        w.update(createVector(points[currentPoint].x, points[currentPoint].y));
+        // w.update(createVector(points[currentPoint].x, points[currentPoint].y));
 
-        w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
+        // w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
+
+        w.update(target);
+
+        w2.update(target2);
+
+
+        fill(255, 0, 0);
+        ellipse(w.pos.x, w.pos.y, 5);
+
+        fill(0, 255, 0);
+        ellipse(w2.pos.x, w2.pos.y, 5);
+
+
 
         // w.display();
 
@@ -133,6 +156,7 @@ function draw() {
             // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
             // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
+            vehicles[i].applyBehaviorsBetter(vehicles2);
             vehicles[i].applyBehaviors(vehicles, shiftedPos, applySeparate);
             vehicles[i].update();
             vehicles[i].display(i);
@@ -141,6 +165,8 @@ function draw() {
             // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
             // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
+
+            vehicles2[j].applyBehaviorsBetter(vehicles);
             vehicles2[j].applyBehaviors(vehicles2, shiftedPos2, applySeparate);
             vehicles2[j].update();
             vehicles2[j].display(j);
@@ -148,7 +174,10 @@ function draw() {
     }
     // blendMode(NORMAL);
     // image(suburb2, width / 2, height / 2, width, width * 9 / 16);
-    if (exporting && frameCount % 2 == 0) {
+    // if (exporting && frameCount % 2 == 0) {
+    //     frameExport();
+    // }
+    if (exporting) {
         frameExport();
     }
 
@@ -200,9 +229,11 @@ function keyPressed() {
             // console.log("yeah!");
             points2.push(createVector(previousPoints2[l][0], previousPoints2[l][1]));
         }
-        w = new Walker(points[0].x, points[0].y);
-        w2 = new Walker(points2[0].x, points2[0].y);
-        // exporting = true;
+        // w = new Walker(points[0].x, points[0].y);
+        // w2 = new Walker(points2[0].x, points2[0].y);
+        w = new Walker(width / 2, height / 2);
+        w2 = new Walker(width / 2, height / 2);
+        exporting = true;
     }
 }
 
