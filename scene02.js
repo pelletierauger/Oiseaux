@@ -25,7 +25,7 @@ var w2;
 
 var suburb;
 var suburb2;
-var seq1;
+var seq4;
 
 function preload() {
     for (var i = 0; i < 4; i++) {
@@ -36,8 +36,8 @@ function preload() {
     // previousPoints2 = loadJSON("points5.json");
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
-    seq1 = loadImage("seq1.png");
-    previousPoints = loadJSON("seq1.json");
+    seq4 = loadImage("seq4.png");
+    previousPoints = loadJSON("seq4.json");
 }
 
 
@@ -68,7 +68,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq1, 0, 0, width / 1, (width * 9 / 16) / 1);
+    image(seq4, 0, 0, width / 1, (width * 9 / 16) / 1);
 
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
@@ -91,7 +91,7 @@ function draw() {
         for (var i = 0; i < points.length; i++) {
             push();
             fill(0, 50);
-            translate(points[i].x, points[i].y);
+            translate(points[i].x * 2, points[i].y * 2);
             ellipse(0, 0, 5);
             pop();
         }
@@ -105,7 +105,7 @@ function draw() {
 
 
         fill(255, 0, 0);
-        ellipse(points[currentPoint].x, points[currentPoint].y, 5);
+        ellipse(points[currentPoint].x * 2, points[currentPoint].y * 2, 5);
 
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
 
@@ -254,7 +254,7 @@ function Walker(x, y) {
 
     this.display = function() {
         fill(0, 255, 0);
-        ellipse(this.pos.x, this.pos.y, s, s);
+        ellipse(this.pos.x * 2, this.pos.y * 2, s, s);
     }
 }
 
