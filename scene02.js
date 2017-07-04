@@ -26,6 +26,9 @@ var w2;
 var suburb;
 var suburb2;
 
+var swarmScalar = 1;
+var swarmScalarVelocity = 0.001;
+
 function preload() {
     for (var i = 0; i < 4; i++) {
         var img = loadImage("dot001-" + i + ".png");
@@ -56,7 +59,7 @@ function setup() {
         // var y = noise(i * 2) * 300;
         var x = width + 150 + cos(i) * 150;
         var y = height + sin(i) * 150;
-        var vehicles = new Vehicle(width / 2, height / 2);
+        var vehicles = new Vehicle(0, 0);
         // var vehicles = new Vehicle(x, y);
         // var vehicles = new Vehicle(x + width / 2, y + height / 2);
     }
@@ -64,12 +67,15 @@ function setup() {
         var x = 150 + cos(j) * 150;
         var y = sin(j) * 150;
         // var vehicles2 = new Vehicle2(x, y);
-        var vehicles2 = new Vehicle2(width / 2, height / 2);
+        var vehicles2 = new Vehicle2(0, 0);
         // var vehicles = new Vehicle(x + width / 2, y + height / 2);
     }
 }
 
 function draw() {
+    translate(width / 2, height / 2);
+    // rotate(map(sin(frameCount / 100), -1, 1, TWO_PI, 0));
+    rotate((frameCount / 100) * swarmScalar);
     var t = frameCount;
 
     blendMode(NORMAL);
@@ -88,8 +94,8 @@ function draw() {
     // x = map(noise(t / 50), 0, 1, -width / 2, width / 2);
     // y = map(noise(1000 + t / 100), 0, 1, -height / 2, height / 2);
 
-    var target = createVector(x + width / 2, y + height / 2);
-    var target2 = createVector(x2 + width / 2, y2 + height / 2);
+    var target = createVector(x, y);
+    var target2 = createVector(x2, y2);
 
 
 
@@ -129,11 +135,11 @@ function draw() {
         w2.update(target2);
 
 
-        fill(255, 0, 0);
-        ellipse(w.pos.x, w.pos.y, 5);
+        // fill(255, 0, 0);
+        // ellipse(w.pos.x, w.pos.y, 5);
 
-        fill(0, 255, 0);
-        ellipse(w2.pos.x, w2.pos.y, 5);
+        // fill(0, 255, 0);
+        // ellipse(w2.pos.x, w2.pos.y, 5);
 
 
 
@@ -180,6 +186,9 @@ function draw() {
     if (exporting) {
         frameExport();
     }
+    // swarmScalarVelocity += 0.00001;
+    // swarmScalar += swarmScalarVelocity;
+    swarmScalar = map(frameCount, 0, 900, 1, 3);
 
 }
 
@@ -231,9 +240,9 @@ function keyPressed() {
         }
         // w = new Walker(points[0].x, points[0].y);
         // w2 = new Walker(points2[0].x, points2[0].y);
-        w = new Walker(width / 2, height / 2);
-        w2 = new Walker(width / 2, height / 2);
-        exporting = true;
+        w = new Walker(0, 0);
+        w2 = new Walker(0, 0);
+        // exporting = true;
     }
 }
 

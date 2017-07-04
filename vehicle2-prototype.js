@@ -111,7 +111,7 @@ Vehicle2.prototype.display = function(i) {
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);
     push();
-    translate(this.pos.x, this.pos.y);
+    translate(this.pos.x * swarmScalar, this.pos.y * swarmScalar);
     var maps = map(i, 0, points.length, 2, 5);
     rotate(sin(frameCount / maps) * TWO_PI);
     var randomDot = Math.floor(random(0, dots.length - 1));
