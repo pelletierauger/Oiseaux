@@ -25,7 +25,7 @@ var w2;
 
 var suburb;
 var suburb2;
-var seq3;
+var seq2;
 
 function preload() {
     for (var i = 0; i < 4; i++) {
@@ -36,8 +36,8 @@ function preload() {
     // previousPoints2 = loadJSON("points5.json");
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
-    seq3 = loadImage("seq3.png");
-    previousPoints = loadJSON("seq3.json");
+    seq2 = loadImage("seq2.png");
+    previousPoints = loadJSON("seq2b.json");
 }
 
 
@@ -68,7 +68,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq3, 0, 0, width / 1, (width * 9 / 16) / 1);
+    image(seq2, 0, 0, width / 1, (width * 9 / 16) / 1);
 
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
@@ -228,6 +228,7 @@ function keyPressed() {
     if (key == 'b' || key == "B") {
         w = new Walker(0, 0);
         // w2 = new Walker(0, 0);
+        createVehicles(0, 0);
     }
 }
 
