@@ -33,10 +33,11 @@ function preload() {
         dots.push(img);
     }
     previousPoints = loadJSON("points4.json");
-    previousPoints2 = loadJSON("points5.json");
+    // previousPoints2 = loadJSON("points5.json");
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
     seq3 = loadImage("seq3.png");
+    previousPoints = loadJSON("seq3.json");
 }
 
 
@@ -51,22 +52,12 @@ function setup() {
 
     // points.push(createVector(0, 0));
 
-    var vehicleCount = 300;
-    var increment = TWO_PI / vehicleCount;
-    for (var i = 0; i < TWO_PI; i += increment) {
-        // var x = noise(i) * 300;
-        // var y = noise(i * 2) * 300;
-        var x = width + 150 + cos(i) * 150;
-        var y = height + sin(i) * 150;
-        var vehicles = new Vehicle(x, y);
-        // var vehicles = new Vehicle(x + width / 2, y + height / 2);
-    }
-    for (var j = 0; j < TWO_PI; j += increment) {
-        var x = 150 + cos(j) * 150;
-        var y = sin(j) * 150;
-        var vehicles2 = new Vehicle2(x, y);
-        // var vehicles = new Vehicle(x + width / 2, y + height / 2);
-    }
+    // for (var j = 0; j < TWO_PI; j += increment) {
+    //     var x = 150 + cos(j) * 150;
+    //     var y = sin(j) * 150;
+    //     var vehicles2 = new Vehicle2(x, y);
+    //     // var vehicles = new Vehicle(x + width / 2, y + height / 2);
+    // }
 }
 
 function draw() {
@@ -77,7 +68,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq3, 0, 0, width / 2, (width * 9 / 16) / 2);
+    image(seq3, 0, 0, width / 1, (width * 9 / 16) / 1);
 
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
@@ -169,6 +160,19 @@ function draw() {
 
 }
 
+function createVehicles(x, y) {
+    var vehicleCount = 400;
+    var increment = TWO_PI / vehicleCount;
+    for (var i = 0; i < TWO_PI; i += increment) {
+        // var x = noise(i) * 300;
+        // var y = noise(i * 2) * 300;
+        // x += cos(i) * 15;
+        // y += sin(i) * 15;
+        var vehicles = new Vehicle(x, y);
+        // var vehicles = new Vehicle(x + width / 2, y + height / 2);
+    }
+}
+
 
 function mousePressed() {
     points.push(createVector(mouseX - width / 2, mouseY - height / 2));
@@ -210,18 +214,20 @@ function keyPressed() {
             // console.log("yeah!");
             points.push(createVector(previousPoints[k][0], previousPoints[k][1]));
         }
-        points2 = [];
-        for (var l = 0; l < previousPoints2.length; l++) {
-            // console.log("yeah!");
-            points2.push(createVector(previousPoints2[l][0], previousPoints2[l][1]));
-        }
+        // points2 = [];
+        // for (var l = 0; l < previousPoints2.length; l++) {
+        //     // console.log("yeah!");
+        //     points2.push(createVector(previousPoints2[l][0], previousPoints2[l][1]));
+        // }
         w = new Walker(points[0].x, points[0].y);
-        w2 = new Walker(points2[0].x, points2[0].y);
+        // w2 = new Walker(points2[0].x, points2[0].y);
         // exporting = true;
+
+        createVehicles(points[0].x, points[0].y);
     }
     if (key == 'b' || key == "B") {
         w = new Walker(0, 0);
-        w2 = new Walker(0, 0);
+        // w2 = new Walker(0, 0);
     }
 }
 
