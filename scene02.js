@@ -25,6 +25,7 @@ var w2;
 
 var suburb;
 var suburb2;
+var seq3;
 
 function preload() {
     for (var i = 0; i < 4; i++) {
@@ -35,6 +36,7 @@ function preload() {
     previousPoints2 = loadJSON("points5.json");
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
+    seq3 = loadImage("seq3.png");
 }
 
 
@@ -49,7 +51,7 @@ function setup() {
 
     // points.push(createVector(0, 0));
 
-    var vehicleCount = 3000;
+    var vehicleCount = 300;
     var increment = TWO_PI / vehicleCount;
     for (var i = 0; i < TWO_PI; i += increment) {
         // var x = noise(i) * 300;
@@ -68,11 +70,15 @@ function setup() {
 }
 
 function draw() {
+    translate(width / 2, height / 2);
     var t = frameCount;
 
     blendMode(NORMAL);
     background(255);
     blendMode(MULTIPLY);
+
+    image(seq3, 0, 0, width / 2, (width * 9 / 16) / 2);
+
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
@@ -91,13 +97,13 @@ function draw() {
     if (points.length > 0) {
 
 
-        // for (var i = 0; i < points.length; i++) {
-        //     push();
-        //     fill(0, 50);
-        //     translate(points[i].x, points[i].y);
-        //     ellipse(0, 0, 5);
-        //     pop();
-        // }
+        for (var i = 0; i < points.length; i++) {
+            push();
+            fill(0, 50);
+            translate(points[i].x, points[i].y);
+            ellipse(0, 0, 5);
+            pop();
+        }
         // for (var i = 0; i < points2.length; i++) {
         //     push();
         //     fill(0, 50);
@@ -107,44 +113,49 @@ function draw() {
         // }
 
 
-        // fill(255, 0, 0);
-        // ellipse(points[currentPoint].x, points[currentPoint].y, 5);
+        fill(255, 0, 0);
+        ellipse(points[currentPoint].x, points[currentPoint].y, 5);
 
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
 
-        w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
+        // w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
 
-        // w.display();
+        w.display();
 
         // fill(255, 0, 0);
         // ellipse(target.x, target.y, 5);
         currentPoint++;
         if (currentPoint >= points.length) {
             currentPoint = 0;
-            // for (var k = 0; k < vehicles.length; k++) {
-            //     vehicles[k].pos = createVector(points[0].x, points[0].y);
-            // }
-
+            for (var k = 0; k < vehicles.length; k++) {
+                vehicles[k].pos = createVector(points[0].x, points[0].y);
+            }
         }
+
         // var shiftedPos = createVector((w.pos.x - 300) * 1.2, (w.pos.y - 200) * 2);
-        var shiftedPos = createVector(w.pos.x, w.pos.y);
-        var shiftedPos2 = createVector(w2.pos.x, w2.pos.y);
+
+
+        // var shiftedPos = createVector(w.pos.x, w.pos.y);
+        // var shiftedPos2 = createVector(w2.pos.x, w2.pos.y);
         for (var i = 0; i < vehicles.length; i++) {
             // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
             // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
-            vehicles[i].applyBehaviors(vehicles, shiftedPos, applySeparate);
+            vehicles[i].applyBehaviors(vehicles, w.pos, applySeparate);
             vehicles[i].update();
             vehicles[i].display(i);
         }
-        for (var j = 0; j < vehicles2.length; j++) {
-            // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
 
-            // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
-            vehicles2[j].applyBehaviors(vehicles2, shiftedPos2, applySeparate);
-            vehicles2[j].update();
-            vehicles2[j].display(j);
-        }
+
+
+        // for (var j = 0; j < vehicles2.length; j++) {
+        //     // vehicles[i].applyBehaviors(vehicles, target, applySeparate);
+
+        //     // vehicles[i].applyBehaviors(vehicles, points[currentPoint], applySeparate);
+        //     vehicles2[j].applyBehaviors(vehicles2, shiftedPos2, applySeparate);
+        //     vehicles2[j].update();
+        //     vehicles2[j].display(j);
+        // }
     }
     // blendMode(NORMAL);
     // image(suburb2, width / 2, height / 2, width, width * 9 / 16);
@@ -152,16 +163,20 @@ function draw() {
         frameExport();
     }
 
+    fill(255, 255, 0, 150);
+    ellipse(0, 0, 15);
+
+
 }
 
 
 function mousePressed() {
-    points.push(createVector(mouseX, mouseY));
+    points.push(createVector(mouseX - width / 2, mouseY - height / 2));
 }
 
 function mouseDragged() {
     if (draggy > 1) {
-        points.push(createVector(mouseX, mouseY));
+        points.push(createVector(mouseX - width / 2, mouseY - height / 2));
         draggy = 0;
     }
     draggy++;
@@ -203,6 +218,10 @@ function keyPressed() {
         w = new Walker(points[0].x, points[0].y);
         w2 = new Walker(points2[0].x, points2[0].y);
         // exporting = true;
+    }
+    if (key == 'b' || key == "B") {
+        w = new Walker(0, 0);
+        w2 = new Walker(0, 0);
     }
 }
 
