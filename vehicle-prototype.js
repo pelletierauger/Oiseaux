@@ -2,7 +2,7 @@ var vehicles = [];
 var maxSpeed = 150;
 var maxForce = 10;
 var dSeparation = 50;
-var seekForceMult = 0.6;
+var seekForceMult = 0.4;
 
 var Vehicle = function(x, y, m) {
     this.pos = createVector(x, y);
@@ -100,7 +100,7 @@ Vehicle.prototype.display = function(i) {
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);
     push();
-    translate(this.pos.x, this.pos.y);
+    translate(this.pos.x * 2, this.pos.y * 2);
     var maps = map(i, 0, points.length, 2, 5);
     rotate(sin(frameCount / maps) * TWO_PI);
     var randomDot = Math.floor(random(0, dots.length - 1));
