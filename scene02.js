@@ -25,7 +25,7 @@ var w2;
 
 var suburb;
 var suburb2;
-var seq2;
+var seq1;
 
 function preload() {
     for (var i = 0; i < 4; i++) {
@@ -36,8 +36,8 @@ function preload() {
     // previousPoints2 = loadJSON("points5.json");
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
-    seq2 = loadImage("seq2.png");
-    previousPoints = loadJSON("seq2b.json");
+    seq1 = loadImage("seq1.png");
+    previousPoints = loadJSON("seq1.json");
 }
 
 
@@ -68,7 +68,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq2, 0, 0, width / 1, (width * 9 / 16) / 1);
+    image(seq1, 0, 0, width / 1, (width * 9 / 16) / 1);
 
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
