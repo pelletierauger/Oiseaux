@@ -28,6 +28,8 @@ var suburb2;
 var seq5;
 var seq5Overlay;
 
+var zoom = 0.5;
+
 var showGuides = true;
 
 function preload() {
@@ -72,7 +74,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq5, 0, 0, width / 1, (width * 9 / 16) / 1);
+    image(seq5, 0, 0, width * zoom, (width * 9 / 16) * zoom);
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
@@ -98,13 +100,13 @@ function draw() {
             for (var i = 0; i < points.length; i++) {
                 push();
                 fill(0, 50);
-                translate(points[i].x * 2, points[i].y * 2);
+                translate(points[i].x * zoom, points[i].y * zoom);
                 ellipse(0, 0, 5);
                 pop();
             }
 
             fill(255, 0, 0);
-            ellipse(points[currentPoint].x * 2, points[currentPoint].y * 2, 5);
+            ellipse(points[currentPoint].x * zoom, points[currentPoint].y * zoom, 5);
 
             w.display();
 
@@ -158,7 +160,12 @@ function draw() {
 
     // if (!showGuides) {
     blendMode(NORMAL);
-    image(seq5Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+    image(seq5Overlay, 0, 0, width * zoom, (width * 9 / 16) * zoom);
+
+    stroke(0);
+    noFill();
+    rect(0, 0, width * zoom, (width * 9 / 16) * zoom);
+    noStroke();
     // }
 }
 
@@ -177,12 +184,12 @@ function createVehicles(x, y) {
 
 
 function mousePressed() {
-    points.push(createVector(mouseX - width / 2, mouseY - height / 2));
+    points.push(createVector((mouseX - width / 2) / zoom, (mouseY - height / 2) / zoom));
 }
 
 function mouseDragged() {
     if (draggy > 1) {
-        points.push(createVector(mouseX - width / 2, mouseY - height / 2));
+        points.push(createVector((mouseX - width / 2) / zoom, (mouseY - height / 2) / zoom));
         draggy = 0;
     }
     draggy++;
@@ -200,6 +207,12 @@ function keyPressed() {
     }
     if (key == 'g' ||  key == 'G') {
         showGuides = (showGuides) ? false : true;
+    }
+    if (key == 'k' ||  key == 'K') {
+        zoom = 0.5;
+    }
+    if (key == 'l' ||  key == 'L') {
+        zoom = 1;
     }
     if (key == 'r' || key == 'R' || key == 'm' || key == 'M') {
         background(51);
@@ -233,7 +246,8 @@ function keyPressed() {
     if (key == 'b' || key == "B") {
         w = new Walker(0, 0);
         // w2 = new Walker(0, 0);
-        createVehicles(0, 0);
+        var v = createVector((mouseX - width / 2) / zoom, (mouseY - height / 2) / zoom);
+        createVehicles(v.x, v.y);
     }
 }
 
