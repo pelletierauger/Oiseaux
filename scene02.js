@@ -218,6 +218,12 @@ function keyPressed() {
     if (key == 'g' ||  key == 'G') {
         showGuides = (showGuides) ? false : true;
     }
+    if (key == 'k' ||  key == 'K') {
+        zoom = 0.5;
+    }
+    if (key == 'l' ||  key == 'L') {
+        zoom = 1;
+    }
     if (key == 'r' || key == 'R' || key == 'm' || key == 'M') {
         background(51);
     }
