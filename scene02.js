@@ -26,6 +26,10 @@ var w2;
 var suburb;
 var suburb2;
 var seq4;
+var seq4Clean;
+var seq4Overlay;
+
+var showGuides = true;
 
 function preload() {
     for (var i = 0; i < 4; i++) {
@@ -37,6 +41,8 @@ function preload() {
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
     seq4 = loadImage("seq4.png");
+    seq4Clean = loadImage("seq4-clean.png");
+    seq4Overlay = loadImage("seq4-overlay.png");
     previousPoints = loadJSON("seq4.json");
 }
 
@@ -68,8 +74,12 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq4, 0, 0, width / 1, (width * 9 / 16) / 1);
+    if (showGuides) {
+        image(seq4, 0, 0, width / 1, (width * 9 / 16) / 1);
+    } else {
+        image(seq4Clean, 0, 0, width / 1, (width * 9 / 16) / 1);
 
+    }
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
@@ -87,31 +97,25 @@ function draw() {
     applySeparate = 1;
     if (points.length > 0) {
 
-
-        for (var i = 0; i < points.length; i++) {
-            push();
-            fill(0, 50);
-            translate(points[i].x * 2, points[i].y * 2);
-            ellipse(0, 0, 5);
-            pop();
-        }
-        // for (var i = 0; i < points2.length; i++) {
-        //     push();
-        //     fill(0, 50);
-        //     translate(points2[i].x, points[i].y);
-        //     ellipse(0, 0, 5);
-        //     pop();
-        // }
-
-
-        fill(255, 0, 0);
-        ellipse(points[currentPoint].x * 2, points[currentPoint].y * 2, 5);
-
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
 
-        // w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
 
-        w.display();
+        if (showGuides) {
+
+            for (var i = 0; i < points.length; i++) {
+                push();
+                fill(0, 50);
+                translate(points[i].x * 2, points[i].y * 2);
+                ellipse(0, 0, 5);
+                pop();
+            }
+
+            fill(255, 0, 0);
+            ellipse(points[currentPoint].x * 2, points[currentPoint].y * 2, 5);
+
+            w.display();
+
+        }
 
         // fill(255, 0, 0);
         // ellipse(target.x, target.y, 5);
@@ -154,10 +158,13 @@ function draw() {
         frameExport();
     }
 
-    fill(255, 255, 0, 150);
-    ellipse(0, 0, 15);
+    // fill(255, 255, 0, 150);
+    // ellipse(0, 0, 15);
 
-
+    if (!showGuides) {
+        blendMode(NORMAL);
+        image(seq4Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+    }
 }
 
 function createVehicles(x, y) {
@@ -195,6 +202,9 @@ function keyPressed() {
             loop();
             looping = true;
         }
+    }
+    if (key == 'g' ||  key == 'G') {
+        showGuides = (showGuides) ? false : true;
     }
     if (key == 'r' || key == 'R' || key == 'm' || key == 'M') {
         background(51);
