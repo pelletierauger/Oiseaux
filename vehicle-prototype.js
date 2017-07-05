@@ -101,11 +101,11 @@ Vehicle.prototype.display = function(i) {
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);
     push();
-    translate(this.pos.x * 2, this.pos.y * 2);
+    translate(this.pos.x * 1 * zoom, this.pos.y * 1 * zoom);
     var maps = map(i, 0, points.length, 2, 5);
     rotate(sin(frameCount / maps) * TWO_PI);
     var randomDot = Math.floor(random(0, dots.length - 1));
-    image(dots[Math.floor(abs(sin(i)) * 3)], 0, 0, s, s);
+    image(dots[Math.floor(abs(sin(i)) * 3)], 0, 0, s * zoom, s * zoom);
     pop();
     // rect(this.os.x, this.pos.y, 1, 1);
 };

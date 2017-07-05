@@ -32,6 +32,8 @@ var seq3Overlay2;
 
 var showGuides = true;
 
+var zoom = 0.5;
+
 function preload() {
     for (var i = 0; i < 4; i++) {
         var img = loadImage("dot001-" + i + ".png");
@@ -55,7 +57,7 @@ function setup() {
     fill(255, 150);
     noStroke();
     frameRate(24);
-
+    rectMode(CENTER);
     imageMode(CENTER);
 
     // points.push(createVector(0, 0));
@@ -77,9 +79,9 @@ function draw() {
     blendMode(MULTIPLY);
 
     if (showGuides) {
-        image(seq3, 0, 0, width / 1, (width * 9 / 16) / 1);
+        image(seq3, 0, 0, width * zoom, (width * 9 / 16) * zoom);
     } else {
-        image(seq3Clean, 0, 0, width / 1, (width * 9 / 16) / 1);
+        image(seq3Clean, 0, 0, width * zoom, (width * 9 / 16) * zoom);
 
     }
 
@@ -107,13 +109,13 @@ function draw() {
             for (var i = 0; i < points.length; i++) {
                 push();
                 fill(0, 50);
-                translate(points[i].x, points[i].y);
+                translate(points[i].x * zoom, points[i].y * zoom);
                 ellipse(0, 0, 5);
                 pop();
             }
 
             fill(255, 0, 0);
-            ellipse(points[currentPoint].x, points[currentPoint].y, 5);
+            ellipse(points[currentPoint].x * zoom, points[currentPoint].y * zoom, 5);
 
             w.display();
 
@@ -160,13 +162,20 @@ function draw() {
         frameExport();
     }
 
-    // fill(255, 255, 0, 150);
-    // ellipse(0, 0, 15);
+    if (showGuides) {
+        fill(255, 255, 0, 150);
+        ellipse(0, 0, 15);
+    }
 
     if (!showGuides) {
         blendMode(NORMAL);
-        image(seq3Overlay2, 0, 0, width / 1, (width * 9 / 16) / 1);
+        image(seq3Overlay2, 0, 0, width * zoom, (width * 9 / 16) * zoom);
     }
+
+    stroke(0);
+    noFill();
+    rect(0, 0, width * zoom, (width * 9 / 16) * zoom);
+    noStroke();
 
 }
 
@@ -185,12 +194,12 @@ function createVehicles(x, y) {
 
 
 function mousePressed() {
-    points.push(createVector(mouseX - width / 2, mouseY - height / 2));
+    points.push(createVector((mouseX - width / 2) / zoom, (mouseY - height / 2) / zoom));
 }
 
 function mouseDragged() {
     if (draggy > 1) {
-        points.push(createVector(mouseX - width / 2, mouseY - height / 2));
+        points.push(createVector((mouseX - width / 2) / zoom, (mouseY - height / 2) / zoom));
         draggy = 0;
     }
     draggy++;
@@ -241,6 +250,8 @@ function keyPressed() {
     if (key == 'b' || key == "B") {
         w = new Walker(0, 0);
         // w2 = new Walker(0, 0);
+        var v = createVector((mouseX - width / 2) / zoom, (mouseY - height / 2) / zoom);
+        createVehicles(v.x, v.y);
     }
 }
 
@@ -266,7 +277,7 @@ function Walker(x, y) {
 
     this.display = function() {
         fill(0, 255, 0);
-        ellipse(this.pos.x, this.pos.y, s, s);
+        ellipse(this.pos.x * zoom, this.pos.y * zoom, s, s);
     }
 }
 
