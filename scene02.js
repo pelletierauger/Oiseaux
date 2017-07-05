@@ -26,6 +26,10 @@ var w2;
 var suburb;
 var suburb2;
 var seq3;
+var seq3Clean;
+var seq3Overlay;
+
+var showGuides = true;
 
 function preload() {
     for (var i = 0; i < 4; i++) {
@@ -37,6 +41,8 @@ function preload() {
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
     seq3 = loadImage("seq3.png");
+    seq3Clean = loadImage("seq3-clean.png");
+    seq3Overlay = loadImage("seq3-overlay.png");
     previousPoints = loadJSON("seq3.json");
 }
 
@@ -68,8 +74,12 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq3, 0, 0, width / 1, (width * 9 / 16) / 1);
+    if (showGuides) {
+        image(seq3, 0, 0, width / 1, (width * 9 / 16) / 1);
+    } else {
+        image(seq3Clean, 0, 0, width / 1, (width * 9 / 16) / 1);
 
+    }
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
@@ -87,31 +97,25 @@ function draw() {
     applySeparate = 1;
     if (points.length > 0) {
 
-
-        for (var i = 0; i < points.length; i++) {
-            push();
-            fill(0, 50);
-            translate(points[i].x, points[i].y);
-            ellipse(0, 0, 5);
-            pop();
-        }
-        // for (var i = 0; i < points2.length; i++) {
-        //     push();
-        //     fill(0, 50);
-        //     translate(points2[i].x, points[i].y);
-        //     ellipse(0, 0, 5);
-        //     pop();
-        // }
-
-
-        fill(255, 0, 0);
-        ellipse(points[currentPoint].x, points[currentPoint].y, 5);
-
         w.update(createVector(points[currentPoint].x, points[currentPoint].y));
 
-        // w2.update(createVector(points2[currentPoint].x, points2[currentPoint].y));
 
-        w.display();
+        if (showGuides) {
+
+            for (var i = 0; i < points.length; i++) {
+                push();
+                fill(0, 50);
+                translate(points[i].x, points[i].y);
+                ellipse(0, 0, 5);
+                pop();
+            }
+
+            fill(255, 0, 0);
+            ellipse(points[currentPoint].x, points[currentPoint].y, 5);
+
+            w.display();
+
+        }
 
         // fill(255, 0, 0);
         // ellipse(target.x, target.y, 5);
@@ -154,9 +158,13 @@ function draw() {
         frameExport();
     }
 
-    fill(255, 255, 0, 150);
-    ellipse(0, 0, 15);
+    // fill(255, 255, 0, 150);
+    // ellipse(0, 0, 15);
 
+    if (!showGuides) {
+        blendMode(NORMAL);
+        image(seq3Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+    }
 
 }
 
@@ -195,6 +203,9 @@ function keyPressed() {
             loop();
             looping = true;
         }
+    }
+    if (key == 'g' ||  key == 'G') {
+        showGuides = (showGuides) ? false : true;
     }
     if (key == 'r' || key == 'R' || key == 'm' || key == 'M') {
         background(51);
