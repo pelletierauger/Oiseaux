@@ -188,7 +188,7 @@ function draw() {
     }
     // swarmScalarVelocity += 0.00001;
     // swarmScalar += swarmScalarVelocity;
-    swarmScalar = map(frameCount, 0, 900, 1, 3);
+    // swarmScalar = map(frameCount, 0, 900, 1, 3);
 
 }
 
@@ -242,7 +242,7 @@ function keyPressed() {
         // w2 = new Walker(points2[0].x, points2[0].y);
         w = new Walker(0, 0);
         w2 = new Walker(0, 0);
-        // exporting = true;
+        exporting = true;
     }
 }
 

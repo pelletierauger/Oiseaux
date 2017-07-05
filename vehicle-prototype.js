@@ -1,6 +1,6 @@
 var vehicles = [];
-var maxSpeed = 150;
-var maxForce = 10;
+var maxSpeed = 2;
+var maxForce = 1;
 var dSeparation = 50;
 var seekForceMult = 0.4;
 
@@ -40,7 +40,7 @@ Vehicle.prototype.separate = function(vehicles) {
         var d = p5.Vector.dist(this.pos, vehicles[i].pos);
         if (d > 0 && d < desiredSeparation) {
             var diff = p5.Vector.sub(this.pos, vehicles[i].pos);
-            diff.normalize();
+            // diff.normalize();
             diff.div(d);
             sum.add(diff);
             count++;

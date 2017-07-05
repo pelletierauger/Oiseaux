@@ -36,7 +36,7 @@ Vehicle2.prototype.separate = function(vehicles) {
         var d = p5.Vector.dist(this.pos, vehicles[i].pos);
         if (d > 0 && d < desiredSeparation) {
             var diff = p5.Vector.sub(this.pos, vehicles[i].pos);
-            diff.normalize();
+            // diff.normalize();
             diff.div(d);
             sum.add(diff);
             count++;
