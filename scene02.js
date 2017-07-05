@@ -28,6 +28,7 @@ var suburb2;
 var seq3;
 var seq3Clean;
 var seq3Overlay;
+var seq3Overlay2;
 
 var showGuides = true;
 
@@ -43,6 +44,7 @@ function preload() {
     seq3 = loadImage("seq3.png");
     seq3Clean = loadImage("seq3-clean.png");
     seq3Overlay = loadImage("seq3-overlay.png");
+    seq3Overlay2 = loadImage("seq3-overlay2.png");
     previousPoints = loadJSON("seq3.json");
 }
 
@@ -163,7 +165,7 @@ function draw() {
 
     if (!showGuides) {
         blendMode(NORMAL);
-        image(seq3Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+        image(seq3Overlay2, 0, 0, width / 1, (width * 9 / 16) / 1);
     }
 
 }

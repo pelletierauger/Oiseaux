@@ -96,7 +96,8 @@ Vehicle.prototype.update = function(force) {
 // };
 
 Vehicle.prototype.display = function(i) {
-    var s = 10;
+    var s = map(this.pos.x, -width / 2, width / 2, 2, 30);
+    // var s = 10;
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);
     push();
