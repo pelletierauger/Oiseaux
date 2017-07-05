@@ -25,9 +25,8 @@ var w2;
 
 var suburb;
 var suburb2;
-var seq4;
-var seq4Clean;
-var seq4Overlay;
+var seq5;
+var seq5Overlay;
 
 var showGuides = true;
 
@@ -40,9 +39,8 @@ function preload() {
     // previousPoints2 = loadJSON("points5.json");
     suburb = loadImage("banlieue.png");
     suburb2 = loadImage("banlieue-overlay.png");
-    seq4 = loadImage("seq4.png");
-    seq4Clean = loadImage("seq4-clean.png");
-    seq4Overlay = loadImage("seq4-overlay.png");
+    seq5 = loadImage("seq5.png");
+    seq5Overlay = loadImage("seq5-overlay.png");
     previousPoints = loadJSON("seq4.json");
 }
 
@@ -74,12 +72,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    if (showGuides) {
-        image(seq4, 0, 0, width / 1, (width * 9 / 16) / 1);
-    } else {
-        image(seq4Clean, 0, 0, width / 1, (width * 9 / 16) / 1);
-
-    }
+    image(seq5, 0, 0, width / 1, (width * 9 / 16) / 1);
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
@@ -158,13 +151,15 @@ function draw() {
         frameExport();
     }
 
-    // fill(255, 255, 0, 150);
-    // ellipse(0, 0, 15);
-
-    if (!showGuides) {
-        blendMode(NORMAL);
-        image(seq4Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+    if (showGuides) {
+        fill(255, 255, 0, 150);
+        ellipse(0, 0, 15);
     }
+
+    // if (!showGuides) {
+    blendMode(NORMAL);
+    image(seq5Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+    // }
 }
 
 function createVehicles(x, y) {
