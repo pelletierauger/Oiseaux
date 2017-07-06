@@ -274,7 +274,7 @@ function Walker(x, y) {
 
     this.display = function() {
         fill(0, 255, 0);
-        ellipse(this.pos.x * 2, this.pos.y * 2, s, s);
+        ellipse(this.pos.x * zoom, this.pos.y * zoom, s, s);
     }
 }
 
