@@ -96,11 +96,11 @@ Vehicle.prototype.update = function(force) {
 // };
 
 Vehicle.prototype.display = function(i) {
-    var s = 10;
+    var s = 10 * zoom;
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);
     push();
-    translate(this.pos.x * 2, this.pos.y * 2);
+    translate(this.pos.x * zoom, this.pos.y * zoom);
     var maps = map(i, 0, points.length, 2, 5);
     rotate(sin(frameCount / maps) * TWO_PI);
     var randomDot = Math.floor(random(0, dots.length - 1));
