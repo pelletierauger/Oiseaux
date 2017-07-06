@@ -171,7 +171,7 @@ function draw() {
 }
 
 function createVehicles(x, y) {
-    var vehicleCount = 400;
+    var vehicleCount = 200;
     var increment = TWO_PI / vehicleCount;
     for (var i = 0; i < TWO_PI; i += increment) {
         // var x = noise(i) * 300;
