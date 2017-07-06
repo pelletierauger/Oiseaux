@@ -128,6 +128,8 @@ function draw() {
             for (var k = 0; k < vehicles.length; k++) {
                 vehicles[k].pos = createVector(points[0].x, points[0].y);
             }
+            w.pos = createVector(points[0].x, points[0].y);
+            w.vel = createVector(0, 0);
         }
 
         // var shiftedPos = createVector((w.pos.x - 300) * 1.2, (w.pos.y - 200) * 2);
