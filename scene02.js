@@ -43,7 +43,7 @@ function preload() {
     suburb2 = loadImage("banlieue-overlay.png");
     seq5 = loadImage("seq5.png");
     seq5Overlay = loadImage("seq5-overlay.png");
-    previousPoints = loadJSON("seq4.json");
+    previousPoints = loadJSON("seq5.json");
 }
 
 
@@ -54,6 +54,7 @@ function setup() {
     noStroke();
     frameRate(24);
 
+    rectMode(CENTER);
     imageMode(CENTER);
 
     // points.push(createVector(0, 0));
