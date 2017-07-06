@@ -1,7 +1,7 @@
 var vehicles = [];
 var maxSpeed = 150;
 var maxForce = 10;
-var dSeparation = 50;
+var dSeparation = 95;
 var seekForceMult = 0.4;
 
 var Vehicle = function(x, y, m) {
