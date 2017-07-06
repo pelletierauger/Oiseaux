@@ -43,7 +43,7 @@ function preload() {
     suburb2 = loadImage("banlieue-overlay.png");
     seq5 = loadImage("seq5.png");
     seq5Overlay = loadImage("seq5-overlay.png");
-    previousPoints = loadJSON("seq5.json");
+    previousPoints = loadJSON("seq5b.json");
 }
 
 
