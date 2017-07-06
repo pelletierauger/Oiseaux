@@ -100,7 +100,7 @@ Vehicle.prototype.display = function(i) {
     fill(0, 255);
     // ellipse(this.pos.x, this.pos.y, 2.5);
     push();
-    translate(this.pos.x * 1 * zoom, this.pos.y * 1 * zoom);
+    translate(this.pos.x * 1 * zoom, (this.pos.y * 1 * zoom) + (50 * zoom));
     var maps = map(i, 0, points.length, 2, 5);
     rotate(sin(frameCount / maps) * TWO_PI);
     var randomDot = Math.floor(random(0, dots.length - 1));
