@@ -28,7 +28,7 @@ var suburb2;
 var seq5;
 var seq5Overlay;
 
-var zoom = 0.5;
+var zoom = 1;
 
 var showGuides = true;
 
@@ -75,7 +75,7 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    image(seq5, 0, 0, width * zoom, (width * 9 / 16) * zoom);
+    // image(seq5, 0, 0, width * zoom, (width * 9 / 16) * zoom);
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
@@ -160,14 +160,17 @@ function draw() {
     }
 
     // if (!showGuides) {
-    blendMode(NORMAL);
-    image(seq5Overlay, 0, 0, width * zoom, (width * 9 / 16) * zoom);
+    // blendMode(NORMAL);
+    // image(seq5Overlay, 0, 0, width * zoom, (width * 9 / 16) * zoom);
 
-    stroke(0);
-    noFill();
-    rect(0, 0, width * zoom, (width * 9 / 16) * zoom);
-    noStroke();
+    // stroke(0);
+    // noFill();
+    // rect(0, 0, width * zoom, (width * 9 / 16) * zoom);
+    // noStroke();
     // }
+    if (frameCount >= 400) {
+        noLoop();
+    }
 }
 
 function createVehicles(x, y) {
@@ -240,9 +243,8 @@ function keyPressed() {
         // }
         w = new Walker(points[0].x, points[0].y);
         // w2 = new Walker(points2[0].x, points2[0].y);
-        // exporting = true;
-
         createVehicles(points[0].x, points[0].y);
+        exporting = true;
     }
     if (key == 'b' || key == "B") {
         w = new Walker(0, 0);
