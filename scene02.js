@@ -74,12 +74,12 @@ function draw() {
     background(255);
     blendMode(MULTIPLY);
 
-    if (showGuides) {
-        image(seq4, 0, 0, width / 1, (width * 9 / 16) / 1);
-    } else {
-        image(seq4Clean, 0, 0, width / 1, (width * 9 / 16) / 1);
+    // if (showGuides) {
+    //     image(seq4, 0, 0, width / 1, (width * 9 / 16) / 1);
+    // } else {
+    //     image(seq4Clean, 0, 0, width / 1, (width * 9 / 16) / 1);
 
-    }
+    // }
 
     // image(suburb, width / 2, height / 2, width, width * 9 / 16);
     // var x = cos(t / 10) * 300;
@@ -161,9 +161,13 @@ function draw() {
     // fill(255, 255, 0, 150);
     // ellipse(0, 0, 15);
 
-    if (!showGuides) {
-        blendMode(NORMAL);
-        image(seq4Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+    // if (!showGuides) {
+    //     blendMode(NORMAL);
+    //     image(seq4Overlay, 0, 0, width / 1, (width * 9 / 16) / 1);
+    // }
+
+    if (frameCount >= 400) {
+        noLoop();
     }
 }
 
@@ -231,9 +235,10 @@ function keyPressed() {
         // }
         w = new Walker(points[0].x, points[0].y);
         // w2 = new Walker(points2[0].x, points2[0].y);
-        // exporting = true;
+
 
         createVehicles(points[0].x, points[0].y);
+        exporting = true;
     }
     if (key == 'b' || key == "B") {
         w = new Walker(0, 0);
