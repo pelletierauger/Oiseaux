@@ -44,7 +44,7 @@ function preload() {
     seq2 = loadImage("seq2.png");
     seq2Clean = loadImage("seq2-clean.png");
     seq2Overlay = loadImage("seq2-overlay.png");
-    previousPoints = loadJSON("seq2b.json");
+    previousPoints = loadJSON("seq2c.json");
 }
 
 
